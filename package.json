@@ -1,0 +1,77 @@
+{
+  "name": "@darbotlabs/pdf-viewer-mcp",
+  "displayName": "Darbot PDF Viewer MCP",
+  "description": "Advanced PDF viewer for VSCode with Edge WebView2 and MCP integration",
+  "version": "0.1.0",
+  "publisher": "darbotlabs",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Viewers",
+    "Other"
+  ],
+  "icon": "resources/icons/pdf-icon.png",
+  "keywords": [
+    "pdf",
+    "viewer",
+    "webview",
+    "edge",
+    "mcp"
+  ],
+  "activationEvents": [
+    "onCustomEditor:darbotlabs.pdf-viewer-mcp",
+    "onCommand:darbotlabs.pdf-viewer-mcp.openPdf"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "customEditors": [
+      {
+        "viewType": "darbotlabs.pdf-viewer-mcp",
+        "displayName": "PDF Viewer",
+        "selector": [
+          {
+            "filenamePattern": "*.pdf"
+          }
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.openPdf",
+        "title": "Open PDF",
+        "category": "PDF Viewer"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "18.x",
+    "@types/mocha": "^10.0.6",
+    "@types/glob": "^8.1.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.0",
+    "@vscode/test-electron": "^2.3.8",
+    "mocha": "^10.2.0",
+    "glob": "^8.1.0"
+  },
+  "dependencies": {
+    "@vscode/webview-ui-toolkit": "^1.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darbotlabs/Darbot-PDF-Viewer-MCP.git"
+  },
+  "license": "MIT",
+  "author": "Darbot Labs"
+}
