@@ -1,9 +1,19 @@
 import * as vscode from 'vscode';
+import * as path from 'path';
+import { McpProvider } from '../providers/McpProvider';
 
 /**
  * Command handlers for the PDF viewer extension
  */
 export class CommandHandlers {
+    private static mcpProvider: McpProvider | undefined;
+    
+    /**
+     * Set the MCP provider instance
+     */
+    public static setMcpProvider(mcpProvider: McpProvider): void {
+        CommandHandlers.mcpProvider = mcpProvider;
+    }
     
     /**
      * Register all command handlers
@@ -32,11 +42,36 @@ export class CommandHandlers {
             CommandHandlers.fitToPage
         );
 
+        // New PDF processing commands
+        const extractTextCommand = vscode.commands.registerCommand(
+            'darbotlabs.pdf-viewer-mcp.extractText',
+            CommandHandlers.extractText
+        );
+
+        const extractImagesCommand = vscode.commands.registerCommand(
+            'darbotlabs.pdf-viewer-mcp.extractImages',
+            CommandHandlers.extractImages
+        );
+
+        const exportPdfCommand = vscode.commands.registerCommand(
+            'darbotlabs.pdf-viewer-mcp.exportPdf',
+            CommandHandlers.exportPdf
+        );
+
+        const getPdfSummaryCommand = vscode.commands.registerCommand(
+            'darbotlabs.pdf-viewer-mcp.getPdfSummary',
+            CommandHandlers.getPdfSummary
+        );
+
         context.subscriptions.push(
             openPdfCommand,
             zoomInCommand,
             zoomOutCommand,
-            fitToPageCommand
+            fitToPageCommand,
+            extractTextCommand,
+            extractImagesCommand,
+            exportPdfCommand,
+            getPdfSummaryCommand
         );
     }
 
@@ -64,6 +99,240 @@ export class CommandHandlers {
             }
         } catch (error) {
             vscode.window.showErrorMessage(`Failed to open PDF: ${error}`);
+        }
+    }
+
+    /**
+     * Extract text from a PDF file
+     */
+    private static async extractText(): Promise<void> {
+        try {
+            const files = await vscode.window.showOpenDialog({
+                canSelectFiles: true,
+                canSelectFolders: false,
+                canSelectMany: false,
+                filters: {
+                    pdfs: ['pdf']
+                },
+                title: 'Select PDF file to extract text from'
+            });
+
+            if (files && files.length > 0 && CommandHandlers.mcpProvider) {
+                await vscode.window.withProgress({
+                    location: vscode.ProgressLocation.Notification,
+                    title: "Extracting text from PDF",
+                    cancellable: false
+                }, async (progress) => {
+                    try {
+                        progress.report({ increment: 0 });
+                        
+                        const textContent = await CommandHandlers.mcpProvider!.extractPdfContent(files[0]);
+                        
+                        progress.report({ increment: 50 });
+                        
+                        // Create a new document with the extracted text
+                        const doc = await vscode.workspace.openTextDocument({
+                            content: textContent,
+                            language: 'plaintext'
+                        });
+                        
+                        progress.report({ increment: 100 });
+                        
+                        await vscode.window.showTextDocument(doc);
+                        vscode.window.showInformationMessage(`Successfully extracted ${textContent.length} characters from PDF`);
+                    } catch (error) {
+                        vscode.window.showErrorMessage(`Failed to extract text: ${error}`);
+                    }
+                });
+            }
+        } catch (error) {
+            vscode.window.showErrorMessage(`Failed to extract text: ${error}`);
+        }
+    }
+
+    /**
+     * Extract images from a PDF file
+     */
+    private static async extractImages(): Promise<void> {
+        try {
+            const files = await vscode.window.showOpenDialog({
+                canSelectFiles: true,
+                canSelectFolders: false,
+                canSelectMany: false,
+                filters: {
+                    pdfs: ['pdf']
+                },
+                title: 'Select PDF file to extract images from'
+            });
+
+            if (files && files.length > 0 && CommandHandlers.mcpProvider) {
+                // Ask user for output directory
+                const outputFolder = await vscode.window.showOpenDialog({
+                    canSelectFiles: false,
+                    canSelectFolders: true,
+                    canSelectMany: false,
+                    title: 'Select output folder for extracted images'
+                });
+
+                const outputDir = outputFolder ? outputFolder[0].fsPath : undefined;
+
+                await vscode.window.withProgress({
+                    location: vscode.ProgressLocation.Notification,
+                    title: "Extracting images from PDF",
+                    cancellable: false
+                }, async (progress) => {
+                    try {
+                        progress.report({ increment: 0 });
+                        
+                        const imagePaths = await CommandHandlers.mcpProvider!.extractPdfImages(files[0], outputDir);
+                        
+                        progress.report({ increment: 100 });
+                        
+                        if (imagePaths.length > 0) {
+                            vscode.window.showInformationMessage(
+                                `Successfully extracted ${imagePaths.length} images from PDF`,
+                                'Show Folder'
+                            ).then(selection => {
+                                if (selection === 'Show Folder') {
+                                    vscode.commands.executeCommand('revealFileInOS', vscode.Uri.file(path.dirname(imagePaths[0])));
+                                }
+                            });
+                        } else {
+                            vscode.window.showWarningMessage('No images were extracted from the PDF');
+                        }
+                    } catch (error) {
+                        vscode.window.showErrorMessage(`Failed to extract images: ${error}`);
+                    }
+                });
+            }
+        } catch (error) {
+            vscode.window.showErrorMessage(`Failed to extract images: ${error}`);
+        }
+    }
+
+    /**
+     * Export PDF to various formats
+     */
+    private static async exportPdf(): Promise<void> {
+        try {
+            const files = await vscode.window.showOpenDialog({
+                canSelectFiles: true,
+                canSelectFolders: false,
+                canSelectMany: false,
+                filters: {
+                    pdfs: ['pdf']
+                },
+                title: 'Select PDF file to export'
+            });
+
+            if (files && files.length > 0 && CommandHandlers.mcpProvider) {
+                // Ask user for export format
+                const format = await vscode.window.showQuickPick([
+                    { label: 'SVG', description: 'Scalable Vector Graphics', value: 'svg' },
+                    { label: 'JPEG', description: 'JPEG Image', value: 'jpeg' },
+                    { label: 'PNG', description: 'PNG Image', value: 'png' },
+                    { label: 'Markdown', description: 'Markdown Document', value: 'markdown' }
+                ], {
+                    placeHolder: 'Select export format'
+                });
+
+                if (!format) {
+                    return;
+                }
+
+                // Ask for output location
+                const outputFile = await vscode.window.showSaveDialog({
+                    defaultUri: vscode.Uri.file(path.join(
+                        path.dirname(files[0].fsPath),
+                        path.basename(files[0].fsPath, '.pdf') + '.' + (format.value === 'jpeg' ? 'jpg' : format.value)
+                    )),
+                    filters: {
+                        [format.label]: [format.value === 'jpeg' ? 'jpg' : format.value]
+                    },
+                    title: `Save ${format.label} file`
+                });
+
+                if (!outputFile) {
+                    return;
+                }
+
+                await vscode.window.withProgress({
+                    location: vscode.ProgressLocation.Notification,
+                    title: `Exporting PDF to ${format.label}`,
+                    cancellable: false
+                }, async (progress) => {
+                    try {
+                        progress.report({ increment: 0 });
+                        
+                        const result = await CommandHandlers.mcpProvider!.convertPdf(
+                            files[0], 
+                            format.value as 'svg' | 'jpeg' | 'png' | 'markdown',
+                            outputFile.fsPath
+                        );
+                        
+                        progress.report({ increment: 100 });
+                        
+                        vscode.window.showInformationMessage(
+                            `Successfully exported PDF to ${format.label}`,
+                            'Open File'
+                        ).then(selection => {
+                            if (selection === 'Open File') {
+                                vscode.commands.executeCommand('vscode.open', vscode.Uri.file(result));
+                            }
+                        });
+                    } catch (error) {
+                        vscode.window.showErrorMessage(`Failed to export PDF: ${error}`);
+                    }
+                });
+            }
+        } catch (error) {
+            vscode.window.showErrorMessage(`Failed to export PDF: ${error}`);
+        }
+    }
+
+    /**
+     * Get PDF summary
+     */
+    private static async getPdfSummary(): Promise<void> {
+        try {
+            const files = await vscode.window.showOpenDialog({
+                canSelectFiles: true,
+                canSelectFolders: false,
+                canSelectMany: false,
+                filters: {
+                    pdfs: ['pdf']
+                },
+                title: 'Select PDF file to summarize'
+            });
+
+            if (files && files.length > 0 && CommandHandlers.mcpProvider) {
+                await vscode.window.withProgress({
+                    location: vscode.ProgressLocation.Notification,
+                    title: "Generating PDF summary",
+                    cancellable: false
+                }, async (progress) => {
+                    try {
+                        progress.report({ increment: 0 });
+                        
+                        const summary = await CommandHandlers.mcpProvider!.getPdfSummary(files[0]);
+                        
+                        progress.report({ increment: 100 });
+                        
+                        // Create a new document with the summary
+                        const doc = await vscode.workspace.openTextDocument({
+                            content: summary,
+                            language: 'plaintext'
+                        });
+                        
+                        await vscode.window.showTextDocument(doc);
+                        vscode.window.showInformationMessage('PDF summary generated successfully');
+                    } catch (error) {
+                        vscode.window.showErrorMessage(`Failed to generate summary: ${error}`);
+                    }
+                });
+            }
+        } catch (error) {
+            vscode.window.showErrorMessage(`Failed to generate summary: ${error}`);
         }
     }
 

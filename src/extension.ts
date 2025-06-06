@@ -31,7 +31,8 @@ export function activate(context: vscode.ExtensionContext) {
         )
     );
 
-    // Register all commands
+    // Set MCP provider for command handlers and register all commands
+    CommandHandlers.setMcpProvider(mcpProvider);
     CommandHandlers.registerCommands(context);
 
 // Removed redundant registration of the 'openPdf' command to avoid duplication.
