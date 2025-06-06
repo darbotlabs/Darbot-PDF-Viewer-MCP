@@ -1,0 +1,9 @@
+node_modules
+out
+dist
+*.vsix
+.vscode-test
+.vscode-test/**
+.nyc_output
+coverage
+**/*.map.js
