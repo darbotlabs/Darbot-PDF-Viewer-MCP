@@ -34,27 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
     // Register all commands
     CommandHandlers.registerCommands(context);
 
-    // Register additional command for opening PDFs
-    const openPdfCommand = vscode.commands.registerCommand(
-        'darbotlabs.pdf-viewer-mcp.openPdf',
-        async () => {
-            const files = await vscode.window.showOpenDialog({
-                canSelectFiles: true,
-                canSelectFolders: false,
-                canSelectMany: false,
-                filters: {
-                    pdfs: ['pdf']  // Fixed naming convention warning
-                }
-            });
-
-            if (files && files.length > 0) {
-                await vscode.commands.executeCommand('vscode.openWith', files[0], 'darbotlabs.pdf-viewer-mcp');
-            }
-        }
-    );
-
-    context.subscriptions.push(openPdfCommand);
-
+// Removed redundant registration of the 'openPdf' command to avoid duplication.
     // Clean up MCP provider on deactivation
     context.subscriptions.push({
         dispose: () => mcpProvider.dispose()
