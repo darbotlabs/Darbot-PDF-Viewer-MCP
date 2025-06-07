@@ -230,7 +230,9 @@ export class ValidationFramework {
                 }
             }
 
-            this.addResult('Package.json', 'pass', 'Package.json structure is valid');
+            if (!this.testResults.some(result => result.status === 'fail')) {
+                this.addResult('Package.json', 'pass', 'Package.json structure is valid');
+            }
 
         } catch (error) {
             this.addResult('Package.json', 'fail', `Package.json validation failed: ${error}`);
