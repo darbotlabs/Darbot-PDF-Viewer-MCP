@@ -40,67 +40,67 @@
       {
         "command": "darbotlabs.pdf-viewer-mcp.openPdf",
         "title": "Open PDF",
-        "category": "PDF Viewer"
+        "category": "Darbot PDF Viewer"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractText",
         "title": "Extract Text from PDF",
-        "category": "PDF Viewer"
+        "category": "Darbot PDF Viewer"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractImages",
         "title": "Extract Images from PDF",
-        "category": "PDF Viewer"
+        "category": "Darbot PDF Viewer"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.exportPdf",
         "title": "Export PDF to Format",
-        "category": "PDF Viewer"
+        "category": "Darbot PDF Viewer"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.getPdfSummary",
         "title": "Generate PDF Summary",
-        "category": "PDF Viewer"
+        "category": "Darbot PDF Viewer"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.searchText",
         "title": "Search Text in PDF",
-        "category": "PDF Viewer"
+        "category": "Darbot PDF Viewer"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractPageText",
         "title": "Extract Text from Specific Page",
-        "category": "PDF Viewer"
+        "category": "Darbot PDF Viewer"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractPageImage",
         "title": "Extract Page as Image",
-        "category": "PDF Viewer"
+        "category": "Darbot PDF Viewer"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.analyzeStructure",
         "title": "Analyze PDF Structure",
-        "category": "PDF Viewer"
+        "category": "Darbot PDF Viewer"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractTables",
         "title": "Extract Tables from PDF",
-        "category": "PDF Viewer"
+        "category": "Darbot PDF Viewer"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.zoomIn",
         "title": "Zoom In",
-        "category": "PDF Viewer"
+        "category": "Darbot PDF Viewer"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.zoomOut",
         "title": "Zoom Out",
-        "category": "PDF Viewer"
+        "category": "Darbot PDF Viewer"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.fitToPage",
         "title": "Fit to Page",
-        "category": "PDF Viewer"
+        "category": "Darbot PDF Viewer"
       }
     ]
   },
