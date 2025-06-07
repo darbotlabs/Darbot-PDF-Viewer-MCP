@@ -32,7 +32,7 @@ mkdir -p docs/design
 mkdir -p docs/style-guide
 
 # Create testing directories
-mkdir -p tests/ui
+mkdir -p src/test/ui
 
 echo "📁 Directory structure created successfully!"
 echo ""
