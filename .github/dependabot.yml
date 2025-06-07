@@ -1,0 +1,62 @@
+version: 2
+
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    reviewers:
+      - "darbotlabs"
+    assignees:
+      - "darbotlabs"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    open-pull-requests-limit: 10
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    ignore:
+      # Ignore major version updates for these critical dependencies
+      - dependency-name: "vscode"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/vscode"
+        update-types: ["version-update:semver-major"]
+    groups:
+      vscode-types:
+        patterns:
+          - "@types/vscode*"
+          - "@vscode/*"
+      eslint:
+        patterns:
+          - "eslint*"
+          - "@typescript-eslint/*"
+      testing:
+        patterns:
+          - "@types/mocha"
+          - "mocha"
+          - "@vscode/test-electron"
+      pdf-processing:
+        patterns:
+          - "pdf-parse"
+          - "pdf2pic" 
+          - "sharp"
+          - "canvas"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+    reviewers:
+      - "darbotlabs"
+    assignees:
+      - "darbotlabs"
+    commit-message:
+      prefix: "ci"
+      include: "scope"

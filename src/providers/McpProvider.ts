@@ -206,6 +206,38 @@ export class McpProvider {
             const pdfUri = vscode.Uri.file(pdfPath);
             return await this.getPdfSummary(pdfUri);
         });
+
+        // Register page-specific tools
+        this.mcpTools.set('get_pdf_page_count', async (pdfPath: string) => {
+            const pdfUri = vscode.Uri.file(pdfPath);
+            return await PdfProcessor.getPageCount(pdfUri);
+        });
+
+        this.mcpTools.set('extract_pdf_page_text', async (pdfPath: string, pageNumber: number) => {
+            const pdfUri = vscode.Uri.file(pdfPath);
+            return await PdfProcessor.extractPageText(pdfUri, pageNumber);
+        });
+
+        this.mcpTools.set('extract_pdf_page_image', async (pdfPath: string, pageNumber: number, outputPath?: string) => {
+            const pdfUri = vscode.Uri.file(pdfPath);
+            return await PdfProcessor.extractPageImage(pdfUri, pageNumber, outputPath);
+        });
+
+        // Register search and analysis tools
+        this.mcpTools.set('search_pdf_text', async (pdfPath: string, searchTerm: string) => {
+            const pdfUri = vscode.Uri.file(pdfPath);
+            return await PdfProcessor.searchText(pdfUri, searchTerm);
+        });
+
+        this.mcpTools.set('analyze_pdf_structure', async (pdfPath: string) => {
+            const pdfUri = vscode.Uri.file(pdfPath);
+            return await PdfProcessor.analyzeStructure(pdfUri);
+        });
+
+        this.mcpTools.set('extract_pdf_tables', async (pdfPath: string) => {
+            const pdfUri = vscode.Uri.file(pdfPath);
+            return await PdfProcessor.extractTables(pdfUri);
+        });
         
         console.log(`Registered ${this.mcpTools.size} MCP tools for PDF processing`);
     }

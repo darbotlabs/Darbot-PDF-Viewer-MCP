@@ -265,4 +265,265 @@ Content Sample: ${textSample}`;
             throw new Error(`PDF summary generation failed: ${error}`);
         }
     }
+
+    /**
+     * Get the total number of pages in a PDF
+     */
+    public static async getPageCount(pdfUri: vscode.Uri): Promise<number> {
+        try {
+            const pdfBuffer = await fs.promises.readFile(pdfUri.fsPath);
+            const data = await pdf(pdfBuffer);
+            return data.numpages;
+        } catch (error) {
+            console.error('Failed to get page count:', error);
+            throw new Error(`Page count retrieval failed: ${error}`);
+        }
+    }
+
+    /**
+     * Extract text from a specific page
+     */
+    public static async extractPageText(pdfUri: vscode.Uri, pageNumber: number): Promise<string> {
+        try {
+            const pdfBuffer = await fs.promises.readFile(pdfUri.fsPath);
+            const data = await pdf(pdfBuffer);
+            
+            if (pageNumber < 1 || pageNumber > data.numpages) {
+                throw new Error(`Page ${pageNumber} does not exist. PDF has ${data.numpages} pages.`);
+            }
+            
+            // Extract text from specific page (simplified approach)
+            // Note: pdf-parse doesn't directly support page-specific extraction
+            // This is a basic implementation that splits content
+            const fullText = data.text;
+            const pages = fullText.split('\f'); // Form feed often separates pages
+            
+            if (pages.length >= pageNumber) {
+                return pages[pageNumber - 1].trim();
+            }
+            
+            // Fallback: estimate page content based on character distribution
+            const charactersPerPage = Math.ceil(fullText.length / data.numpages);
+            const startIndex = (pageNumber - 1) * charactersPerPage;
+            const endIndex = Math.min(startIndex + charactersPerPage, fullText.length);
+            
+            return fullText.substring(startIndex, endIndex).trim();
+        } catch (error) {
+            console.error('Failed to extract page text:', error);
+            throw new Error(`Page text extraction failed: ${error}`);
+        }
+    }
+
+    /**
+     * Extract a specific page as an image
+     */
+    public static async extractPageImage(pdfUri: vscode.Uri, pageNumber: number, outputPath?: string): Promise<string> {
+        try {
+            const pageCount = await this.getPageCount(pdfUri);
+            if (pageNumber < 1 || pageNumber > pageCount) {
+                throw new Error(`Page ${pageNumber} does not exist. PDF has ${pageCount} pages.`);
+            }
+
+            const outputDir = outputPath ? path.dirname(outputPath) : path.join(path.dirname(pdfUri.fsPath), 'extracted-pages');
+            const filename = outputPath ? path.basename(outputPath, path.extname(outputPath)) : `page-${pageNumber}`;
+            
+            await fs.promises.mkdir(outputDir, { recursive: true });
+
+            const convert = pdf2pic.fromPath(pdfUri.fsPath, {
+                density: 200,
+                saveFilename: filename,
+                savePath: outputDir,
+                format: "png",
+                width: 1600,
+                height: 2000
+            });
+
+            const result = await convert(pageNumber, { responseType: "image" });
+            if (!result.path) {
+                throw new Error(`Failed to extract page ${pageNumber} as image`);
+            }
+
+            return result.path;
+        } catch (error) {
+            console.error('Failed to extract page image:', error);
+            throw new Error(`Page image extraction failed: ${error}`);
+        }
+    }
+
+    /**
+     * Search for text within the PDF and return page numbers and context
+     */
+    public static async searchText(pdfUri: vscode.Uri, searchTerm: string): Promise<Array<{page: number, context: string, position: number}>> {
+        try {
+            const text = await this.extractText(pdfUri);
+            const pageCount = await this.getPageCount(pdfUri);
+            const results: Array<{page: number, context: string, position: number}> = [];
+            
+            // Split text into pages (rough estimation)
+            const pages = text.split('\f');
+            if (pages.length < pageCount) {
+                // Fallback: distribute text evenly across pages
+                const charactersPerPage = Math.ceil(text.length / pageCount);
+                for (let i = 0; i < pageCount; i++) {
+                    const startIndex = i * charactersPerPage;
+                    const endIndex = Math.min(startIndex + charactersPerPage, text.length);
+                    pages[i] = text.substring(startIndex, endIndex);
+                }
+            }
+
+            // Search in each page
+            for (let pageIndex = 0; pageIndex < Math.min(pages.length, pageCount); pageIndex++) {
+                const pageText = pages[pageIndex];
+                const searchRegex = new RegExp(searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+                let match;
+                
+                while ((match = searchRegex.exec(pageText)) !== null) {
+                    const contextStart = Math.max(0, match.index - 50);
+                    const contextEnd = Math.min(pageText.length, match.index + searchTerm.length + 50);
+                    const context = pageText.substring(contextStart, contextEnd);
+                    
+                    results.push({
+                        page: pageIndex + 1,
+                        context: context.trim(),
+                        position: match.index
+                    });
+                }
+            }
+
+            return results;
+        } catch (error) {
+            console.error('Failed to search PDF text:', error);
+            throw new Error(`Text search failed: ${error}`);
+        }
+    }
+
+    /**
+     * Analyze PDF structure and extract basic document information
+     */
+    public static async analyzeStructure(pdfUri: vscode.Uri): Promise<any> {
+        try {
+            const pdfBuffer = await fs.promises.readFile(pdfUri.fsPath);
+            const data = await pdf(pdfBuffer);
+            const text = data.text;
+            
+            // Basic structure analysis
+            const lines = text.split('\n').filter(line => line.trim().length > 0);
+            const words = text.split(/\s+/).filter(word => word.length > 0);
+            const paragraphs = text.split('\n\n').filter(p => p.trim().length > 0);
+            
+            // Estimate headings (lines that are short and may be titles)
+            const potentialHeadings = lines.filter(line => {
+                const trimmed = line.trim();
+                return trimmed.length > 5 && trimmed.length < 100 && 
+                       (trimmed === trimmed.toUpperCase() || /^\d+\.?\s/.test(trimmed));
+            });
+
+            // Look for table-like structures (lines with multiple tabs or consistent spacing)
+            const potentialTables = lines.filter(line => {
+                return (line.match(/\t/g) || []).length >= 3 || 
+                       (line.match(/\s{3,}/g) || []).length >= 2;
+            });
+
+            return {
+                pages: data.numpages,
+                totalCharacters: text.length,
+                totalWords: words.length,
+                totalLines: lines.length,
+                totalParagraphs: paragraphs.length,
+                potentialHeadings: potentialHeadings.length,
+                potentialTables: potentialTables.length,
+                averageWordsPerPage: Math.round(words.length / data.numpages),
+                documentType: this.detectDocumentType(text),
+                hasNumbers: /\d/.test(text),
+                hasSpecialCharacters: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(text)
+            };
+        } catch (error) {
+            console.error('Failed to analyze PDF structure:', error);
+            throw new Error(`Structure analysis failed: ${error}`);
+        }
+    }
+
+    /**
+     * Detect the likely document type based on content patterns
+     */
+    private static detectDocumentType(text: string): string {
+        const lowerText = text.toLowerCase();
+        
+        if (lowerText.includes('abstract') && lowerText.includes('references')) {
+            return 'academic_paper';
+        } else if (lowerText.includes('invoice') || lowerText.includes('bill') || lowerText.includes('amount due')) {
+            return 'invoice';
+        } else if (lowerText.includes('resume') || lowerText.includes('curriculum vitae') || lowerText.includes('experience')) {
+            return 'resume';
+        } else if (lowerText.includes('contract') || lowerText.includes('agreement') || lowerText.includes('terms and conditions')) {
+            return 'legal_document';
+        } else if (lowerText.includes('chapter') && lowerText.includes('table of contents')) {
+            return 'book';
+        } else if ((lowerText.match(/\d+/g) || []).length > 50 && lowerText.includes('total')) {
+            return 'financial_report';
+        } else {
+            return 'general_document';
+        }
+    }
+
+    /**
+     * Extract table-like structures from PDF text
+     */
+    public static async extractTables(pdfUri: vscode.Uri): Promise<Array<{page: number, table: string[][]}>> {
+        try {
+            const text = await this.extractText(pdfUri);
+            const pageCount = await this.getPageCount(pdfUri);
+            const tables: Array<{page: number, table: string[][]}> = [];
+            
+            // Split text into pages
+            const pages = text.split('\f');
+            if (pages.length < pageCount) {
+                const charactersPerPage = Math.ceil(text.length / pageCount);
+                for (let i = 0; i < pageCount; i++) {
+                    const startIndex = i * charactersPerPage;
+                    const endIndex = Math.min(startIndex + charactersPerPage, text.length);
+                    pages[i] = text.substring(startIndex, endIndex);
+                }
+            }
+
+            // Look for table patterns in each page
+            for (let pageIndex = 0; pageIndex < Math.min(pages.length, pageCount); pageIndex++) {
+                const pageText = pages[pageIndex];
+                const lines = pageText.split('\n');
+                
+                // Find lines that look like table rows (multiple tab-separated values or consistent spacing)
+                const tableLines: string[] = [];
+                for (const line of lines) {
+                    if ((line.match(/\t/g) || []).length >= 2 || 
+                        (line.match(/\s{3,}/g) || []).length >= 2) {
+                        tableLines.push(line);
+                    }
+                }
+
+                // Group consecutive table lines
+                if (tableLines.length >= 2) {
+                    const table: string[][] = [];
+                    for (const line of tableLines) {
+                        // Split by tabs or multiple spaces
+                        const cells = line.split(/\t|\s{3,}/).map(cell => cell.trim()).filter(cell => cell.length > 0);
+                        if (cells.length >= 2) {
+                            table.push(cells);
+                        }
+                    }
+                    
+                    if (table.length >= 2) {
+                        tables.push({
+                            page: pageIndex + 1,
+                            table: table
+                        });
+                    }
+                }
+            }
+
+            return tables;
+        } catch (error) {
+            console.error('Failed to extract tables:', error);
+            throw new Error(`Table extraction failed: ${error}`);
+        }
+    }
 }

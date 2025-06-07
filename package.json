@@ -63,6 +63,31 @@
         "category": "PDF Viewer"
       },
       {
+        "command": "darbotlabs.pdf-viewer-mcp.searchText",
+        "title": "Search Text in PDF",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.extractPageText",
+        "title": "Extract Text from Specific Page",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.extractPageImage",
+        "title": "Extract Page as Image",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.analyzeStructure",
+        "title": "Analyze PDF Structure",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.extractTables",
+        "title": "Extract Tables from PDF",
+        "category": "PDF Viewer"
+      },
+      {
         "command": "darbotlabs.pdf-viewer-mcp.zoomIn",
         "title": "Zoom In",
         "category": "PDF Viewer"
@@ -85,7 +110,8 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "test:validation": "npm run pretest && npm test"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
