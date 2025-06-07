@@ -41,6 +41,66 @@
         "command": "darbotlabs.pdf-viewer-mcp.openPdf",
         "title": "Open PDF",
         "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.extractText",
+        "title": "Extract Text from PDF",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.extractImages",
+        "title": "Extract Images from PDF",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.exportPdf",
+        "title": "Export PDF to Format",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.getPdfSummary",
+        "title": "Generate PDF Summary",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.searchText",
+        "title": "Search Text in PDF",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.extractPageText",
+        "title": "Extract Text from Specific Page",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.extractPageImage",
+        "title": "Extract Page as Image",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.analyzeStructure",
+        "title": "Analyze PDF Structure",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.extractTables",
+        "title": "Extract Tables from PDF",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.zoomIn",
+        "title": "Zoom In",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.zoomOut",
+        "title": "Zoom Out",
+        "category": "PDF Viewer"
+      },
+      {
+        "command": "darbotlabs.pdf-viewer-mcp.fitToPage",
+        "title": "Fit to Page",
+        "category": "PDF Viewer"
       }
     ]
   },
@@ -50,23 +110,29 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "test:validation": "npm run pretest && npm test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.85.0",
-    "@types/node": "18.x",
-    "@types/mocha": "^10.0.6",
     "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/pdf-parse": "^1.1.5",
+    "@types/vscode": "^1.85.0",
     "@typescript-eslint/eslint-plugin": "^6.13.0",
     "@typescript-eslint/parser": "^6.13.0",
-    "eslint": "^8.54.0",
-    "typescript": "^5.3.0",
     "@vscode/test-electron": "^2.3.8",
+    "eslint": "^8.54.0",
+    "glob": "^8.1.0",
     "mocha": "^10.2.0",
-    "glob": "^8.1.0"
+    "typescript": "^5.3.0"
   },
   "dependencies": {
-    "@vscode/webview-ui-toolkit": "^1.4.0"
+    "@vscode/webview-ui-toolkit": "^1.4.0",
+    "canvas": "^3.1.0",
+    "pdf-parse": "^1.1.1",
+    "pdf2pic": "^3.2.0",
+    "sharp": "^0.34.2"
   },
   "repository": {
     "type": "git",
