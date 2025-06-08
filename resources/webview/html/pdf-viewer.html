@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="{{CSP}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Viewer</title>
+    <link rel="stylesheet" href="{{CSS_URI}}">
+</head>
+<body>
+    <div class="toolbar">
+        <div class="zoom-controls">
+            <button onclick="zoomOut()">−</button>
+            <span class="zoom-level" id="zoomLevel">100%</span>
+            <button onclick="zoomIn()">+</button>
+            <button onclick="fitToPage()">Fit</button>
+        </div>
+        <button onclick="downloadPdf()">Download</button>
+    </div>
+    
+    <div class="pdf-container">
+        <object 
+            class="pdf-embed" 
+            data="{{PDF_URI}}" 
+            type="application/pdf"
+            id="pdfObject">
+            <div class="error-message">
+                <p>Your browser doesn't support PDF viewing.</p>
+                <p>Please download the PDF to view it: <a href="{{PDF_URI}}">Download PDF</a></p>
+            </div>
+        </object>
+    </div>
+
+    <script src="{{JS_URI}}"></script>
+</body>
+</html>

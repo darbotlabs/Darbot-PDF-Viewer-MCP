@@ -62,6 +62,14 @@ export class PdfProvider implements vscode.CustomReadonlyEditorProvider {
     private getHtmlForWebview(webview: vscode.Webview, pdfUri: vscode.Uri): string {
         // Get the resource URI for the PDF file
         const pdfSrc = webview.asWebviewUri(pdfUri);
+        
+        // Get resource URIs for CSS and JS files
+        const cssUri = webview.asWebviewUri(
+            vscode.Uri.joinPath(this.context.extensionUri, 'resources', 'webview', 'css', 'pdf-viewer.css')
+        );
+        const jsUri = webview.asWebviewUri(
+            vscode.Uri.joinPath(this.context.extensionUri, 'resources', 'webview', 'js', 'pdf-viewer.js')
+        );
 
         // Use a content security policy that allows embedding PDFs
         const csp = `
@@ -72,81 +80,15 @@ export class PdfProvider implements vscode.CustomReadonlyEditorProvider {
             frame-src ${webview.cspSource} data:;
         `;
 
-        return `<!DOCTYPE html>
+        // Read the HTML template and replace placeholders
+        const htmlTemplate = `<!DOCTYPE html>
             <html lang="en">
             <head>
                 <meta charset="UTF-8">
                 <meta http-equiv="Content-Security-Policy" content="${csp}">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <title>PDF Viewer</title>
-                <style>
-                    body {
-                        margin: 0;
-                        padding: 0;
-                        background-color: var(--vscode-editor-background);
-                        color: var(--vscode-editor-foreground);
-                        font-family: var(--vscode-font-family);
-                        display: flex;
-                        flex-direction: column;
-                        height: 100vh;
-                    }
-                    
-                    .toolbar {
-                        background-color: var(--vscode-toolbar-hoverBackground);
-                        padding: 8px;
-                        border-bottom: 1px solid var(--vscode-panel-border);
-                        display: flex;
-                        align-items: center;
-                        gap: 8px;
-                    }
-                    
-                    .toolbar button {
-                        background-color: var(--vscode-button-background);
-                        color: var(--vscode-button-foreground);
-                        border: none;
-                        padding: 4px 8px;
-                        border-radius: 2px;
-                        cursor: pointer;
-                        font-size: 12px;
-                    }
-                    
-                    .toolbar button:hover {
-                        background-color: var(--vscode-button-hoverBackground);
-                    }
-                    
-                    .pdf-container {
-                        flex: 1;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        overflow: auto;
-                        background-color: var(--vscode-editor-background);
-                    }
-                    
-                    .pdf-embed {
-                        width: 100%;
-                        height: 100%;
-                        border: none;
-                    }
-                    
-                    .error-message {
-                        color: var(--vscode-errorForeground);
-                        text-align: center;
-                        padding: 20px;
-                    }
-                    
-                    .zoom-controls {
-                        display: flex;
-                        align-items: center;
-                        gap: 4px;
-                    }
-                    
-                    .zoom-level {
-                        font-size: 12px;
-                        min-width: 50px;
-                        text-align: center;
-                    }
-                </style>
+                <link rel="stylesheet" href="${cssUri}">
             </head>
             <body>
                 <div class="toolbar">
@@ -172,48 +114,10 @@ export class PdfProvider implements vscode.CustomReadonlyEditorProvider {
                     </object>
                 </div>
 
-                <script>
-                    const vscode = acquireVsCodeApi();
-                    let currentZoom = 100;
-                    
-                    function zoomIn() {
-                        currentZoom = Math.min(currentZoom + 25, 500);
-                        updateZoom();
-                    }
-                    
-                    function zoomOut() {
-                        currentZoom = Math.max(currentZoom - 25, 25);
-                        updateZoom();
-                    }
-                    
-                    function fitToPage() {
-                        currentZoom = 100;
-                        updateZoom();
-                    }
-                    
-                    function updateZoom() {
-                        document.getElementById('zoomLevel').textContent = currentZoom + '%';
-                        const pdfObject = document.getElementById('pdfObject');
-                        pdfObject.style.transform = 'scale(' + (currentZoom / 100) + ')';
-                        pdfObject.style.transformOrigin = 'center top';
-                    }
-                    
-                    function downloadPdf() {
-                        const link = document.createElement('a');
-                        link.href = '${pdfSrc}';
-                        link.download = '';
-                        link.click();
-                    }
-                    
-                    // Initialize
-                    document.addEventListener('DOMContentLoaded', function() {
-                        vscode.postMessage({
-                            command: 'log',
-                            text: 'PDF viewer initialized'
-                        });
-                    });
-                </script>
+                <script src="${jsUri}"></script>
             </body>
             </html>`;
+
+        return htmlTemplate;
     }
 }
