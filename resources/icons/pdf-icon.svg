@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dc143c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#b22222;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background rectangle with rounded corners -->
+  <rect x="8" y="8" width="112" height="112" rx="16" ry="16" fill="url(#bgGradient)" stroke="#8b0000" stroke-width="2"/>
+  
+  <!-- PDF text -->
+  <text x="64" y="55" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="white">PDF</text>
+  
+  <!-- Subtitle -->
+  <text x="64" y="85" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="normal" fill="rgba(255,255,255,0.8)">VIEWER</text>
+  
+  <!-- Small document icon -->
+  <rect x="85" y="25" width="20" height="24" rx="2" ry="2" fill="white" fill-opacity="0.3"/>
+  <line x1="88" y1="30" x2="102" y2="30" stroke="white" stroke-width="1" stroke-opacity="0.6"/>
+  <line x1="88" y1="34" x2="102" y2="34" stroke="white" stroke-width="1" stroke-opacity="0.6"/>
+  <line x1="88" y1="38" x2="98" y2="38" stroke="white" stroke-width="1" stroke-opacity="0.6"/>
+</svg>
