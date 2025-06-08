@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 24 24">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#5A7AFF;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#2D5BFF;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <!-- Document outline with folded corner -->
+  <path d="M4 2h10l6 6v14c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2z"
+        fill="none" stroke="url(#grad)" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Eye outer -->
+  <ellipse cx="12" cy="14" rx="6" ry="4" fill="none" stroke="url(#grad)" stroke-width="2"/>
+  <!-- Eye pupil -->
+  <circle cx="12" cy="14" r="1.5" fill="url(#grad)"/>
+</svg>
