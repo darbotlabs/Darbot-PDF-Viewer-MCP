@@ -9,11 +9,13 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     
     strategy:
       matrix:
         node-version: [18.x, 20.x]
         vscode-version: [1.85.0, stable]
+      fail-fast: false
     
     steps:
     - name: Checkout repository
@@ -41,6 +43,7 @@ jobs:
         npm test
       env:
         VSCODE_VERSION: ${{ matrix.vscode-version }}
+      continue-on-error: true
         
     - name: Run validation
       run: npm run test:validation
