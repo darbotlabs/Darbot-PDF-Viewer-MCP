@@ -1,0 +1,71 @@
+/* PDF Viewer Base Styles */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--vscode-editor-background);
+    color: var(--vscode-editor-foreground);
+    font-family: var(--vscode-font-family);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Toolbar Styles */
+.toolbar {
+    background-color: var(--vscode-toolbar-hoverBackground);
+    padding: 8px;
+    border-bottom: 1px solid var(--vscode-panel-border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.toolbar button {
+    background-color: var(--vscode-button-background);
+    color: var(--vscode-button-foreground);
+    border: none;
+    padding: 4px 8px;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.toolbar button:hover {
+    background-color: var(--vscode-button-hoverBackground);
+}
+
+/* PDF Container Styles */
+.pdf-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    background-color: var(--vscode-editor-background);
+}
+
+.pdf-embed {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Error Message Styles */
+.error-message {
+    color: var(--vscode-errorForeground);
+    text-align: center;
+    padding: 20px;
+}
+
+/* Zoom Control Styles */
+.zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.zoom-level {
+    font-size: 12px;
+    min-width: 50px;
+    text-align: center;
+}
