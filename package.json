@@ -40,67 +40,80 @@
       {
         "command": "darbotlabs.pdf-viewer-mcp.openPdf",
         "title": "Open PDF",
-        "category": "Darbot PDF Viewer"
+        "category": "Darbot PDF Viewer",
+        "icon": "$(file-pdf)"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractText",
         "title": "Extract Text from PDF",
-        "category": "Darbot PDF Viewer"
+        "category": "Darbot PDF Viewer",
+        "icon": "$(file-text)"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractImages",
         "title": "Extract Images from PDF",
-        "category": "Darbot PDF Viewer"
+        "category": "Darbot PDF Viewer",
+        "icon": "$(file-media)"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.exportPdf",
         "title": "Export PDF to Format",
-        "category": "Darbot PDF Viewer"
+        "category": "Darbot PDF Viewer",
+        "icon": "$(export)"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.getPdfSummary",
         "title": "Generate PDF Summary",
-        "category": "Darbot PDF Viewer"
+        "category": "Darbot PDF Viewer",
+        "icon": "$(list-unordered)"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.searchText",
         "title": "Search Text in PDF",
-        "category": "Darbot PDF Viewer"
+        "category": "Darbot PDF Viewer",
+        "icon": "$(search)"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractPageText",
         "title": "Extract Text from Specific Page",
-        "category": "Darbot PDF Viewer"
+        "category": "Darbot PDF Viewer",
+        "icon": "$(file-text)"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractPageImage",
         "title": "Extract Page as Image",
-        "category": "Darbot PDF Viewer"
+        "category": "Darbot PDF Viewer",
+        "icon": "$(file-media)"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.analyzeStructure",
         "title": "Analyze PDF Structure",
-        "category": "Darbot PDF Viewer"
+        "category": "Darbot PDF Viewer",
+        "icon": "$(list-tree)"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractTables",
         "title": "Extract Tables from PDF",
-        "category": "Darbot PDF Viewer"
+        "category": "Darbot PDF Viewer",
+        "icon": "$(table)"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.zoomIn",
         "title": "Zoom In",
-        "category": "Darbot PDF Viewer"
+        "category": "Darbot PDF Viewer",
+        "icon": "$(zoom-in)"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.zoomOut",
         "title": "Zoom Out",
-        "category": "Darbot PDF Viewer"
+        "category": "Darbot PDF Viewer",
+        "icon": "$(zoom-out)"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.fitToPage",
         "title": "Fit to Page",
-        "category": "Darbot PDF Viewer"
+        "category": "Darbot PDF Viewer",
+        "icon": "$(screen-full)"
       }
     ]
   },
