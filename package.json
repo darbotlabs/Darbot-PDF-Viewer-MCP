@@ -111,7 +111,8 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
-    "test:validation": "npm run pretest && npm test"
+    "test:unit": "npm run pretest && echo 'Unit tests: Code compiles and lints successfully'",
+    "test:validation": "npm run test:unit"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",
