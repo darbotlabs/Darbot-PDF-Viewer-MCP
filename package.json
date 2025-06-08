@@ -41,79 +41,79 @@
         "command": "darbotlabs.pdf-viewer-mcp.openPdf",
         "title": "Open PDF",
         "category": "Darbot PDF Viewer",
-        "icon": "$(file-pdf)"
+        "icon": "resources/icons/commands/open-pdf.svg"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractText",
         "title": "Extract Text from PDF",
         "category": "Darbot PDF Viewer",
-        "icon": "$(file-text)"
+        "icon": "resources/icons/commands/extract-text.svg"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractImages",
         "title": "Extract Images from PDF",
         "category": "Darbot PDF Viewer",
-        "icon": "$(file-media)"
+        "icon": "resources/icons/commands/extract-images.svg"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.exportPdf",
         "title": "Export PDF to Format",
         "category": "Darbot PDF Viewer",
-        "icon": "$(export)"
+        "icon": "resources/icons/commands/export-pdf.svg"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.getPdfSummary",
         "title": "Generate PDF Summary",
         "category": "Darbot PDF Viewer",
-        "icon": "$(list-unordered)"
+        "icon": "resources/icons/commands/summary.svg"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.searchText",
         "title": "Search Text in PDF",
         "category": "Darbot PDF Viewer",
-        "icon": "$(search)"
+        "icon": "resources/icons/commands/search.svg"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractPageText",
         "title": "Extract Text from Specific Page",
         "category": "Darbot PDF Viewer",
-        "icon": "$(file-text)"
+        "icon": "resources/icons/commands/extract-page-text.svg"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractPageImage",
         "title": "Extract Page as Image",
         "category": "Darbot PDF Viewer",
-        "icon": "$(file-media)"
+        "icon": "resources/icons/commands/extract-page-image.svg"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.analyzeStructure",
         "title": "Analyze PDF Structure",
         "category": "Darbot PDF Viewer",
-        "icon": "$(list-tree)"
+        "icon": "resources/icons/commands/analyze-structure.svg"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.extractTables",
         "title": "Extract Tables from PDF",
         "category": "Darbot PDF Viewer",
-        "icon": "$(table)"
+        "icon": "resources/icons/commands/extract-tables.svg"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.zoomIn",
         "title": "Zoom In",
         "category": "Darbot PDF Viewer",
-        "icon": "$(zoom-in)"
+        "icon": "resources/icons/commands/zoom-in.svg"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.zoomOut",
         "title": "Zoom Out",
         "category": "Darbot PDF Viewer",
-        "icon": "$(zoom-out)"
+        "icon": "resources/icons/commands/zoom-out.svg"
       },
       {
         "command": "darbotlabs.pdf-viewer-mcp.fitToPage",
         "title": "Fit to Page",
         "category": "Darbot PDF Viewer",
-        "icon": "$(screen-full)"
+        "icon": "resources/icons/commands/fit-to-page.svg"
       }
     ]
   },
