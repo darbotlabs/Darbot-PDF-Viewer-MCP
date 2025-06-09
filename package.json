@@ -4,20 +4,34 @@
   "description": "Advanced PDF viewer for VSCode with Edge WebView2 and MCP integration",
   "version": "0.1.0",
   "publisher": "darbotlabs",
+  "type": "module",
   "engines": {
     "vscode": "^1.85.0"
   },
   "categories": [
     "Viewers",
+    "Data Science",
+    "Machine Learning",
     "Other"
   ],
   "icon": "resources/icons/pdf-icon.png",
+  "galleryBanner": {
+    "color": "#2D5BFF",
+    "theme": "dark"
+  },
   "keywords": [
     "pdf",
     "viewer",
     "webview",
     "edge",
-    "mcp"
+    "mcp",
+    "ai",
+    "document",
+    "text-extraction",
+    "image-extraction",
+    "analysis",
+    "conversion",
+    "model-context-protocol"
   ],
   "activationEvents": [
     "onCustomEditor:darbotlabs.pdf-viewer-mcp",
@@ -125,7 +139,10 @@
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
     "test:unit": "npm run pretest && echo 'Unit tests: Code compiles and lints successfully'",
-    "test:validation": "npm run test:unit"
+    "test:validation": "npm run test:unit",
+    "validate:production": "node validate-production.js",
+    "package": "npm run vscode:prepublish && vsce package",
+    "publish": "npm run vscode:prepublish && vsce publish"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",

@@ -1,7 +1,22 @@
-# Darbot PDF Viewer MCP
+<div align="center">
+  <img src="resources/icons/pdf-icon.png" alt="Darbot PDF Viewer MCP" width="128" height="128">
+  
+  # Darbot PDF Viewer MCP
+  
+  **Advanced PDF viewer for VSCode with Edge WebView2 and MCP integration**
+  
+  [![Version](https://img.shields.io/vscode-marketplace/v/darbotlabs.pdf-viewer-mcp.svg?style=flat-square&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=darbotlabs.pdf-viewer-mcp)
+  [![Downloads](https://img.shields.io/vscode-marketplace/d/darbotlabs.pdf-viewer-mcp.svg?style=flat-square&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=darbotlabs.pdf-viewer-mcp)
+  [![Rating](https://img.shields.io/vscode-marketplace/r/darbotlabs.pdf-viewer-mcp.svg?style=flat-square&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=darbotlabs.pdf-viewer-mcp)
+  [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
+  
+  [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+  [![Node.js](https://img.shields.io/badge/Node.js-43853D?style=flat-square&logo=node.js&logoColor=white)](https://nodejs.org/)
+  [![VSCode](https://img.shields.io/badge/VSCode-0078D4?style=flat-square&logo=visual-studio-code&logoColor=white)](https://code.visualstudio.com/)
+  [![Edge WebView2](https://img.shields.io/badge/Edge_WebView2-0078D7?style=flat-square&logo=microsoft-edge&logoColor=white)](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
+</div>
 
-[![Version](https://img.shields.io/vscode-marketplace/v/darbotlabs.pdf-viewer-mcp.svg)](https://marketplace.visualstudio.com/items?itemName=darbotlabs.pdf-viewer-mcp)
-[![Downloads](https://img.shields.io/vscode-marketplace/d/darbotlabs.pdf-viewer-mcp.svg)](https://marketplace.visualstudio.com/items?itemName=darbotlabs.pdf-viewer-mcp)
+---
 
 A powerful PDF viewer extension for VSCode with Edge WebView2 integration and MCP (Model Context Protocol) support for AI-powered document interaction.
 
@@ -50,58 +65,144 @@ Implemented 14 specialized MCP tools for AI-powered PDF processing:
 
 ## ✨ Features
 
-- **Native PDF Viewing**: Leverages Edge WebView2 for superior PDF rendering
-- **Advanced Controls**: Zoom in/out, fit to page, page navigation
-- **Comprehensive Text Processing**: Extract all text content or specific pages from PDF documents using the pdf-parse library
-- **Advanced Search**: Search for text within PDFs with page locations and context
-- **Image Extraction**: Extract images from PDF pages as high-quality PNG files using pdf2pic
-- **Page-Specific Operations**: Extract individual pages as text or images
-- **Document Analysis**: Analyze PDF structure, detect document type, and extract metadata
-- **Table Recognition**: Automatically detect and extract table structures
-- **Format Conversion**: Convert PDFs to SVG, JPEG, PNG, HTML, PowerPoint, Word, and Markdown formats
-- **MCP Integration**: AI-powered document analysis and interaction with 14 comprehensive PDF processing tools
-- **Theme Support**: Seamlessly integrates with VSCode light and dark themes
-- **Fast Performance**: Optimized rendering with lazy loading and caching
+<table>
+<tr>
+<td>
+
+### 🖥️ **Native PDF Viewing**
+- Leverages Edge WebView2 for superior PDF rendering
+- Advanced controls: Zoom in/out, fit to page, page navigation
+- Theme support: Seamlessly integrates with VSCode light and dark themes
+- Fast performance with optimized rendering and caching
+
+</td>
+<td>
+
+### 🔍 **Advanced Text Processing**
+- Extract all text content or specific pages using pdf-parse library
+- Advanced search with page locations and context
+- Document analysis and PDF structure detection
+- Table recognition and extraction
+
+</td>
+</tr>
+<tr>
+<td>
+
+### 🖼️ **Image & Visual Processing**
+- Extract images from PDF pages as high-quality PNG files using pdf2pic
+- Page-specific operations: Extract individual pages as text or images
+- Format conversion: SVG, JPEG, PNG, HTML, PowerPoint, Word, and Markdown
+- Professional visual asset integration
+
+</td>
+<td>
+
+### 🤖 **AI-Powered MCP Integration**
+- 14 comprehensive PDF processing tools for AI interaction
+- AI-powered document analysis and summarization
+- Context-aware processing for intelligent document interaction
+- Seamless integration with Model Context Protocol
+
+</td>
+</tr>
+</table>
+
+### 🚀 **Additional Capabilities**
 - **Error Handling**: Robust error handling with user-friendly feedback
 - **Progress Indicators**: Visual feedback for long-running operations
+- **Configurable Output**: Customizable output directories for extracted content
+- **Production Ready**: Comprehensive testing and validation framework
 
 ## 🚀 Quick Start
 
-1. Install the extension from the VSCode marketplace
-2. Open any PDF file in VSCode
-3. The file will automatically open in the PDF viewer
-4. Use the toolbar controls for navigation and zoom
+<div align="center">
+
+### Get started in 3 easy steps!
+
+</div>
+
+| Step | Action | Description |
+|------|--------|-------------|
+| **1** | 📦 **Install** | Install the extension from the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=darbotlabs.pdf-viewer-mcp) |
+| **2** | 📄 **Open PDF** | Open any PDF file in VSCode - it will automatically open in the PDF viewer |
+| **3** | 🎮 **Explore** | Use the toolbar controls for navigation, zoom, and access 13+ powerful commands via the Command Palette |
+
+### 💡 Pro Tips
+- **Quick Access**: Use `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) and type "Darbot PDF" to see all available commands
+- **MCP Integration**: Perfect for AI workflows - extract text, analyze structure, and convert formats
+- **Batch Processing**: Use MCP tools for automated document processing in AI applications
 
 ## 📋 Commands
 
-### Basic Commands
-- `Darbot PDF Viewer: Open PDF` - Open a PDF file dialog
-- `Darbot PDF Viewer: Zoom In` - Increase zoom level
-- `Darbot PDF Viewer: Zoom Out` - Decrease zoom level  
-- `Darbot PDF Viewer: Fit to Page` - Fit PDF to page width
+Access all commands via the Command Palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) and search for "Darbot PDF":
 
-### Text and Content Extraction
-- `Darbot PDF Viewer: Extract Text from PDF` - Extract all text content from a PDF file
-- `Darbot PDF Viewer: Extract Text from Specific Page` - Extract text from a single page
-- `Darbot PDF Viewer: Search Text in PDF` - Search for specific text and get page locations with context
-- `Darbot PDF Viewer: Generate PDF Summary` - Generate a summary of PDF content and metadata
+<details>
+<summary><strong>🎮 Basic Navigation Commands</strong></summary>
 
-### Image and Visual Processing
-- `Darbot PDF Viewer: Extract Images from PDF` - Extract images from PDF pages as PNG files
-- `Darbot PDF Viewer: Extract Page as Image` - Convert a specific page to a high-quality image
+| Command | Description | Icon |
+|---------|-------------|------|
+| `Darbot PDF Viewer: Open PDF` | Open a PDF file dialog | 📄 |
+| `Darbot PDF Viewer: Zoom In` | Increase zoom level | 🔍+ |
+| `Darbot PDF Viewer: Zoom Out` | Decrease zoom level | 🔍- |
+| `Darbot PDF Viewer: Fit to Page` | Fit PDF to page width | 📐 |
 
-### Document Analysis
-- `Darbot PDF Viewer: Analyze PDF Structure` - Analyze document structure, type, and characteristics
-- `Darbot PDF Viewer: Extract Tables from PDF` - Identify and extract table structures from the document
+</details>
 
-### Format Conversion
-- `Darbot PDF Viewer: Export PDF to Format` - Convert PDF to SVG, JPEG, PNG, HTML, PowerPoint, Word, or Markdown
+<details>
+<summary><strong>📝 Text and Content Extraction</strong></summary>
+
+| Command | Description | Icon |
+|---------|-------------|------|
+| `Darbot PDF Viewer: Extract Text from PDF` | Extract all text content from a PDF file | 📝 |
+| `Darbot PDF Viewer: Extract Text from Specific Page` | Extract text from a single page | 📄📝 |
+| `Darbot PDF Viewer: Search Text in PDF` | Search for specific text and get page locations with context | 🔍 |
+| `Darbot PDF Viewer: Generate PDF Summary` | Generate a summary of PDF content and metadata | 📊 |
+
+</details>
+
+<details>
+<summary><strong>🖼️ Image and Visual Processing</strong></summary>
+
+| Command | Description | Icon |
+|---------|-------------|------|
+| `Darbot PDF Viewer: Extract Images from PDF` | Extract images from PDF pages as PNG files | 🖼️ |
+| `Darbot PDF Viewer: Extract Page as Image` | Convert a specific page to a high-quality image | 📄🖼️ |
+
+</details>
+
+<details>
+<summary><strong>🔍 Document Analysis</strong></summary>
+
+| Command | Description | Icon |
+|---------|-------------|------|
+| `Darbot PDF Viewer: Analyze PDF Structure` | Analyze document structure, type, and characteristics | 🏗️ |
+| `Darbot PDF Viewer: Extract Tables from PDF` | Identify and extract table structures from the document | 📊 |
+
+</details>
+
+<details>
+<summary><strong>🔄 Format Conversion</strong></summary>
+
+| Command | Description | Icon |
+|---------|-------------|------|
+| `Darbot PDF Viewer: Export PDF to Format` | Convert PDF to SVG, JPEG, PNG, HTML, PowerPoint, Word, or Markdown | 🔄 |
+
+</details>
 
 ## ⚙️ Requirements
 
-- VSCode 1.85.0 or higher
-- Node.js 18+ (for development)
-- Edge WebView2 runtime (Windows - usually pre-installed)
+<div align="center">
+
+| Component | Version | Status |
+|-----------|---------|---------|
+| ![VSCode](https://img.shields.io/badge/VSCode-1.85.0+-0078D4?style=flat-square&logo=visual-studio-code&logoColor=white) | 1.85.0+ | ✅ Required |
+| ![Node.js](https://img.shields.io/badge/Node.js-18+-43853D?style=flat-square&logo=node.js&logoColor=white) | 18+ | 🔧 Development Only |
+| ![Edge WebView2](https://img.shields.io/badge/Edge_WebView2-Runtime-0078D7?style=flat-square&logo=microsoft-edge&logoColor=white) | Latest | 🪟 Windows (Auto-installed) |
+
+</div>
+
+> **Note**: Edge WebView2 runtime is typically pre-installed on Windows 10/11. For other platforms, the extension uses VSCode's built-in webview capabilities.
 
 ## 🔧 Configuration
 
@@ -181,15 +282,20 @@ npm test
 Run comprehensive validation checks:
 
 ```bash
+# Full production readiness validation
+npm run validate:production
+
+# Standard unit tests and validation
 npm run test:validation
 ```
 
-This runs end-to-end validation covering:
-- Extension activation and command registration
-- MCP provider functionality with all 14 tools
-- PDF processor capabilities
-- Error handling and edge cases
-- Documentation completeness
+The production validation covers:
+- ✅ Package.json configuration and required fields
+- ✅ Extension icon and visual assets
+- ✅ Command registration and implementation
+- ✅ README documentation completeness
+- ✅ Build output and compilation
+- ✅ All critical production requirements
 
 ### Package
 
@@ -220,24 +326,58 @@ darbot-pdf-viewer-mcp/
 └── test/                     # Test files
 ```
 
+## 🎬 Demo & Screenshots
+
+> 📸 *Screenshots and demo videos coming soon! Check back after marketplace publication.*
+
+### 🎯 Use Cases
+- **📚 Research**: Extract text and images from academic papers and documents
+- **🤖 AI Workflows**: Integrate with AI tools using MCP for document analysis
+- **📊 Data Extraction**: Extract tables and structured data from reports
+- **🔄 Format Conversion**: Convert PDFs to various formats for different workflows
+- **📝 Content Analysis**: Analyze document structure and generate summaries
+
+---
+
 ## 🤝 Contributing
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+### 🛠️ Development Workflow
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🐛 Issues
+## 🐛 Issues & Support
 
-Found a bug or have a feature request? Please [create an issue](https://github.com/darbotlabs/Darbot-PDF-Viewer-MCP/issues).
+- **🐞 Bug Reports**: [Create an issue](https://github.com/darbotlabs/Darbot-PDF-Viewer-MCP/issues/new?template=bug_report.md)
+- **💡 Feature Requests**: [Request a feature](https://github.com/darbotlabs/Darbot-PDF-Viewer-MCP/issues/new?template=feature_request.md)
+- **❓ Questions**: [Discussions](https://github.com/darbotlabs/Darbot-PDF-Viewer-MCP/discussions)
 
 ## 🙏 Acknowledgments
 
-- Microsoft VSCode team for the excellent extension APIs
-- Edge WebView2 team for the powerful web runtime
-- MCP community for the context protocol specifications
+- **Microsoft VSCode Team** - For the excellent extension APIs and development environment
+- **Microsoft Edge WebView2 Team** - For the powerful web runtime enabling superior PDF rendering
+- **MCP Community** - For the Model Context Protocol specifications enabling AI integration
+- **Open Source Contributors** - For the amazing libraries that make this extension possible
 
 ---
 
-**Darbot Labs** - Revolutionizing document viewing in VSCode
+<div align="center">
+  
+  ### 🚀 **Made with ❤️ by [Darbot Labs](https://github.com/darbotlabs)**
+  
+  **Revolutionizing document viewing and AI interaction in VSCode**
+  
+  [![GitHub](https://img.shields.io/badge/GitHub-darbotlabs-181717?style=flat-square&logo=github)](https://github.com/darbotlabs)
+  [![Website](https://img.shields.io/badge/Website-darbotlabs.com-0078D4?style=flat-square&logo=edge&logoColor=white)](https://darbotlabs.com)
+  
+  **⭐ If you find this extension useful, please consider starring the repository! ⭐**
+  
+</div>
