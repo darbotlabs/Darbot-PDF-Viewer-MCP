@@ -7,3 +7,9 @@ dist
 .nyc_output
 coverage
 **/*.map.js
+
+# Test assets and temporary files
+test-assets/output/
+test-assets/sample-pdfs/
+*.tmp
+*.temp
