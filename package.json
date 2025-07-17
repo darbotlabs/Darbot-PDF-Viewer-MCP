@@ -2,11 +2,11 @@
   "name": "darbot-pdf-viewer-mcp",
   "displayName": "Darbot PDF Viewer MCP",
   "description": "Advanced PDF viewer for VSCode with Edge WebView2 and MCP integration",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "publisher": "darbotlabs",
   "type": "module",
   "engines": {
-    "vscode": "^1.85.0"
+    "vscode": "^1.101.0"
   },
   "categories": [
     "Viewers",
@@ -168,6 +168,11 @@
     "type": "git",
     "url": "https://github.com/darbotlabs/Darbot-PDF-Viewer-MCP.git"
   },
+  "bugs": {
+    "url": "https://github.com/darbotlabs/Darbot-PDF-Viewer-MCP/issues"
+  },
+  "homepage": "https://github.com/darbotlabs/Darbot-PDF-Viewer-MCP#readme",
   "license": "MIT",
-  "author": "Darbot Labs"
+  "author": "Darbot Labs",
+  "qna": "marketplace"
 }
