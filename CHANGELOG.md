@@ -5,9 +5,27 @@ All notable changes to the Darbot PDF Viewer MCP extension will be documented in
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+# Changelog
 
-### Added
+All notable changes to the Darbot PDF Viewer MCP extension will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [1.0.0] - 2024-12-19
+
+### 🚀 **Marketplace Release** - Major Milestone!
+
+**BREAKING**: First official marketplace release with comprehensive PDF processing capabilities.
+
+### ✨ **Marketplace Readiness**
+- **Published to VS Code Marketplace** - One-click installation now available
+- **Optimized Package Size** - Reduced from 36.2MB to 83.87KB through .vscodeignore optimization
+- **Version Compatibility** - Updated engines.vscode to ^1.101.0 for marketplace compatibility
+- **Enhanced Metadata** - Added marketplace-required fields: bugs, homepage, qna
+- **Installation Documentation** - Updated README with marketplace installation instructions
+
+### 🔧 **PDF Processing Core**
 - Enhanced PDF processing with 14 comprehensive MCP tools
 - Page-specific text and image extraction capabilities
 - Advanced text search functionality with context and page locations

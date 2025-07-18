@@ -5,9 +5,9 @@
   
   **Advanced PDF viewer for VSCode with Edge WebView2 and MCP integration**
   
-  [![Version](https://img.shields.io/vscode-marketplace/v/darbotlabs.pdf-viewer-mcp.svg?style=flat-square&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=darbotlabs.pdf-viewer-mcp)
-  [![Downloads](https://img.shields.io/vscode-marketplace/d/darbotlabs.pdf-viewer-mcp.svg?style=flat-square&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=darbotlabs.pdf-viewer-mcp)
-  [![Rating](https://img.shields.io/vscode-marketplace/r/darbotlabs.pdf-viewer-mcp.svg?style=flat-square&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=darbotlabs.pdf-viewer-mcp)
+  [![Version](https://img.shields.io/vscode-marketplace/v/darbotlabs.darbot-pdf-viewer-mcp.svg?style=flat-square&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=darbotlabs.darbot-pdf-viewer-mcp)
+  [![Downloads](https://img.shields.io/vscode-marketplace/d/darbotlabs.darbot-pdf-viewer-mcp.svg?style=flat-square&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=darbotlabs.darbot-pdf-viewer-mcp)
+  [![Rating](https://img.shields.io/vscode-marketplace/r/darbotlabs.darbot-pdf-viewer-mcp.svg?style=flat-square&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=darbotlabs.darbot-pdf-viewer-mcp)
   [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
   
   [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
@@ -118,13 +118,40 @@ Implemented 14 specialized MCP tools for AI-powered PDF processing:
 
 <div align="center">
 
-### Get started in 3 easy steps!
+### 📦 One-Click Installation from VS Code Marketplace
+
+**The easiest way to get started!**
 
 </div>
 
+### Method 1: VS Code Marketplace (Recommended)
+
+1. **Open VS Code**
+2. **Go to Extensions** (`Ctrl+Shift+X` / `Cmd+Shift+X`)
+3. **Search for** "Darbot PDF Viewer MCP"
+4. **Click Install**
+
+**Or install directly:**
+- [🛒 **Install from VS Code Marketplace**](https://marketplace.visualstudio.com/items?itemName=darbotlabs.darbot-pdf-viewer-mcp)
+
+### Method 2: Command Line Installation
+
+```bash
+code --install-extension darbotlabs.darbot-pdf-viewer-mcp
+```
+
+### Method 3: Manual Installation (Development)
+
+For development or pre-release versions:
+
+```bash
+# Download the latest .vsix from releases
+# Then in VS Code: Extensions > ... > Install from VSIX
+```
+
 | Step | Action | Description |
 |------|--------|-------------|
-| **1** | 📦 **Install** | Install the extension from the [VSCode Marketplace](https://marketplace.visualstudio.com/items?itemName=darbotlabs.pdf-viewer-mcp) |
+| **1** | 📦 **Install** | One-click install from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=darbotlabs.darbot-pdf-viewer-mcp) |
 | **2** | 📄 **Open PDF** | Open any PDF file in VSCode - it will automatically open in the PDF viewer |
 | **3** | 🎮 **Explore** | Use the toolbar controls for navigation, zoom, and access 13+ powerful commands via the Command Palette |
 
