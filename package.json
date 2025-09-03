@@ -145,7 +145,7 @@
     "publish": "npm run vscode:prepublish && vsce publish"
   },
   "devDependencies": {
-    "@types/glob": "^8.1.0",
+    "@types/glob": "^9.0.0",
     "@types/mocha": "^10.0.6",
     "@types/node": "24.x",
     "@types/pdf-parse": "^1.1.5",
