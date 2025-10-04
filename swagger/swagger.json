@@ -1,0 +1,931 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Darbot PDF Viewer MCP API",
+    "description": "REST API connector for Darbot PDF Viewer MCP tools compatible with Microsoft Copilot Studio and Power Platform",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Darbot Labs",
+      "url": "https://github.com/darbotlabs/Darbot-PDF-Viewer-MCP"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://github.com/darbotlabs/Darbot-PDF-Viewer-MCP/blob/main/LICENSE"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "schemes": ["http", "https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/pdf/text": {
+      "post": {
+        "summary": "Extract text from PDF",
+        "description": "Extracts all text content from a PDF document",
+        "operationId": "extractPdfText",
+        "tags": ["Text Extraction"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PdfPathRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully extracted text",
+            "schema": {
+              "$ref": "#/definitions/TextResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pdf/metadata": {
+      "post": {
+        "summary": "Extract PDF metadata",
+        "description": "Extracts metadata information from a PDF document including title, author, dates, etc.",
+        "operationId": "extractPdfMetadata",
+        "tags": ["Metadata"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PdfPathRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully extracted metadata",
+            "schema": {
+              "$ref": "#/definitions/MetadataResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pdf/images": {
+      "post": {
+        "summary": "Extract images from PDF",
+        "description": "Extracts all images from a PDF document and returns their file paths",
+        "operationId": "extractPdfImages",
+        "tags": ["Image Extraction"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ImageExtractionRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully extracted images",
+            "schema": {
+              "$ref": "#/definitions/ImagePathsResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pdf/convert/svg": {
+      "post": {
+        "summary": "Convert PDF to SVG",
+        "description": "Converts a PDF document to SVG format",
+        "operationId": "convertPdfToSvg",
+        "tags": ["Conversion"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ConversionRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully converted to SVG",
+            "schema": {
+              "$ref": "#/definitions/FilePathResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pdf/convert/jpeg": {
+      "post": {
+        "summary": "Convert PDF to JPEG",
+        "description": "Converts a PDF document to JPEG format",
+        "operationId": "convertPdfToJpeg",
+        "tags": ["Conversion"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ConversionRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully converted to JPEG",
+            "schema": {
+              "$ref": "#/definitions/FilePathResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pdf/convert/png": {
+      "post": {
+        "summary": "Convert PDF to PNG",
+        "description": "Converts a PDF document to PNG format",
+        "operationId": "convertPdfToPng",
+        "tags": ["Conversion"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ConversionRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully converted to PNG",
+            "schema": {
+              "$ref": "#/definitions/FilePathResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pdf/convert/markdown": {
+      "post": {
+        "summary": "Convert PDF to Markdown",
+        "description": "Converts a PDF document to Markdown format",
+        "operationId": "convertPdfToMarkdown",
+        "tags": ["Conversion"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ConversionRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully converted to Markdown",
+            "schema": {
+              "$ref": "#/definitions/FilePathResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pdf/summary": {
+      "post": {
+        "summary": "Get PDF summary",
+        "description": "Generates a comprehensive summary of the PDF document",
+        "operationId": "getPdfSummary",
+        "tags": ["Analysis"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PdfPathRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully generated summary",
+            "schema": {
+              "$ref": "#/definitions/SummaryResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pdf/page-count": {
+      "post": {
+        "summary": "Get PDF page count",
+        "description": "Returns the total number of pages in the PDF document",
+        "operationId": "getPdfPageCount",
+        "tags": ["Page Operations"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PdfPathRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved page count",
+            "schema": {
+              "$ref": "#/definitions/PageCountResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pdf/page/text": {
+      "post": {
+        "summary": "Extract text from specific page",
+        "description": "Extracts text content from a specific page number in the PDF",
+        "operationId": "extractPdfPageText",
+        "tags": ["Page Operations"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PageOperationRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully extracted page text",
+            "schema": {
+              "$ref": "#/definitions/TextResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pdf/page/image": {
+      "post": {
+        "summary": "Extract page as image",
+        "description": "Converts a specific page to an image file",
+        "operationId": "extractPdfPageImage",
+        "tags": ["Page Operations"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PageImageRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully extracted page as image",
+            "schema": {
+              "$ref": "#/definitions/FilePathResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pdf/search": {
+      "post": {
+        "summary": "Search text in PDF",
+        "description": "Searches for a specific term in the PDF document and returns matches with context",
+        "operationId": "searchPdfText",
+        "tags": ["Search"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SearchRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully searched PDF",
+            "schema": {
+              "$ref": "#/definitions/SearchResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pdf/analyze/structure": {
+      "post": {
+        "summary": "Analyze PDF structure",
+        "description": "Analyzes the PDF document structure including headings, paragraphs, and organization",
+        "operationId": "analyzePdfStructure",
+        "tags": ["Analysis"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PdfPathRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully analyzed structure",
+            "schema": {
+              "$ref": "#/definitions/StructureAnalysisResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/pdf/tables": {
+      "post": {
+        "summary": "Extract tables from PDF",
+        "description": "Extracts table structures from the PDF document",
+        "operationId": "extractPdfTables",
+        "tags": ["Analysis"],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PdfPathRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully extracted tables",
+            "schema": {
+              "$ref": "#/definitions/TablesResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "schema": {
+              "$ref": "#/definitions/ErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "description": "Returns the health status of the API",
+        "operationId": "healthCheck",
+        "tags": ["System"],
+        "responses": {
+          "200": {
+            "description": "API is healthy",
+            "schema": {
+              "$ref": "#/definitions/HealthResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "PdfPathRequest": {
+      "type": "object",
+      "required": ["pdfPath"],
+      "properties": {
+        "pdfPath": {
+          "type": "string",
+          "description": "Absolute path to the PDF file",
+          "example": "/path/to/document.pdf"
+        }
+      }
+    },
+    "ImageExtractionRequest": {
+      "type": "object",
+      "required": ["pdfPath"],
+      "properties": {
+        "pdfPath": {
+          "type": "string",
+          "description": "Absolute path to the PDF file"
+        },
+        "outputDir": {
+          "type": "string",
+          "description": "Optional output directory for extracted images"
+        }
+      }
+    },
+    "ConversionRequest": {
+      "type": "object",
+      "required": ["pdfPath"],
+      "properties": {
+        "pdfPath": {
+          "type": "string",
+          "description": "Absolute path to the PDF file"
+        },
+        "outputPath": {
+          "type": "string",
+          "description": "Optional output path for converted file"
+        }
+      }
+    },
+    "PageOperationRequest": {
+      "type": "object",
+      "required": ["pdfPath", "pageNumber"],
+      "properties": {
+        "pdfPath": {
+          "type": "string",
+          "description": "Absolute path to the PDF file"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "description": "Page number (1-indexed)",
+          "minimum": 1
+        }
+      }
+    },
+    "PageImageRequest": {
+      "type": "object",
+      "required": ["pdfPath", "pageNumber"],
+      "properties": {
+        "pdfPath": {
+          "type": "string",
+          "description": "Absolute path to the PDF file"
+        },
+        "pageNumber": {
+          "type": "integer",
+          "description": "Page number (1-indexed)",
+          "minimum": 1
+        },
+        "outputPath": {
+          "type": "string",
+          "description": "Optional output path for the image"
+        }
+      }
+    },
+    "SearchRequest": {
+      "type": "object",
+      "required": ["pdfPath", "searchTerm"],
+      "properties": {
+        "pdfPath": {
+          "type": "string",
+          "description": "Absolute path to the PDF file"
+        },
+        "searchTerm": {
+          "type": "string",
+          "description": "Term to search for in the PDF"
+        }
+      }
+    },
+    "TextResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "text": {
+          "type": "string",
+          "description": "Extracted text content"
+        }
+      }
+    },
+    "MetadataResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "author": {
+              "type": "string"
+            },
+            "subject": {
+              "type": "string"
+            },
+            "creator": {
+              "type": "string"
+            },
+            "producer": {
+              "type": "string"
+            },
+            "creationDate": {
+              "type": "string"
+            },
+            "modificationDate": {
+              "type": "string"
+            },
+            "pages": {
+              "type": "integer"
+            },
+            "version": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "ImagePathsResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "imagePaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of file paths to extracted images"
+        }
+      }
+    },
+    "FilePathResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "filePath": {
+          "type": "string",
+          "description": "Path to the generated file"
+        }
+      }
+    },
+    "SummaryResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "summary": {
+          "type": "object",
+          "properties": {
+            "pages": {
+              "type": "integer"
+            },
+            "title": {
+              "type": "string"
+            },
+            "author": {
+              "type": "string"
+            },
+            "wordCount": {
+              "type": "integer"
+            },
+            "characterCount": {
+              "type": "integer"
+            },
+            "contentPreview": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "PageCountResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "pageCount": {
+          "type": "integer"
+        }
+      }
+    },
+    "SearchResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "page": {
+                "type": "integer"
+              },
+              "context": {
+                "type": "string"
+              },
+              "position": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "StructureAnalysisResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "analysis": {
+          "type": "object",
+          "properties": {
+            "pages": {
+              "type": "integer"
+            },
+            "totalCharacters": {
+              "type": "integer"
+            },
+            "totalWords": {
+              "type": "integer"
+            },
+            "totalLines": {
+              "type": "integer"
+            },
+            "totalParagraphs": {
+              "type": "integer"
+            },
+            "averageWordsPerPage": {
+              "type": "integer"
+            },
+            "headings": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "tablesDetected": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    "TablesResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean"
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "pageNumber": {
+                "type": "integer"
+              },
+              "content": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "HealthResponse": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "example": "ok"
+        },
+        "version": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "ErrorResponse": {
+      "type": "object",
+      "properties": {
+        "success": {
+          "type": "boolean",
+          "example": false
+        },
+        "error": {
+          "type": "string",
+          "description": "Error message"
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Text Extraction",
+      "description": "Extract text content from PDF documents"
+    },
+    {
+      "name": "Metadata",
+      "description": "Extract and manage PDF metadata"
+    },
+    {
+      "name": "Image Extraction",
+      "description": "Extract images from PDF documents"
+    },
+    {
+      "name": "Conversion",
+      "description": "Convert PDF documents to various formats"
+    },
+    {
+      "name": "Analysis",
+      "description": "Analyze PDF structure and content"
+    },
+    {
+      "name": "Page Operations",
+      "description": "Operations on specific PDF pages"
+    },
+    {
+      "name": "Search",
+      "description": "Search functionality within PDF documents"
+    },
+    {
+      "name": "System",
+      "description": "System and health check endpoints"
+    }
+  ]
+}

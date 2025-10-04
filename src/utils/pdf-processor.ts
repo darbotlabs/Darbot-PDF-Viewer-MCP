@@ -407,19 +407,19 @@ Content Sample: ${textSample}`;
             const text = data.text;
             
             // Basic structure analysis
-            const lines = text.split('\n').filter(line => line.trim().length > 0);
-            const words = text.split(/\s+/).filter(word => word.length > 0);
-            const paragraphs = text.split('\n\n').filter(p => p.trim().length > 0);
+            const lines = text.split('\n').filter((line: string) => line.trim().length > 0);
+            const words = text.split(/\s+/).filter((word: string) => word.length > 0);
+            const paragraphs = text.split('\n\n').filter((p: string) => p.trim().length > 0);
             
             // Estimate headings (lines that are short and may be titles)
-            const potentialHeadings = lines.filter(line => {
+            const potentialHeadings = lines.filter((line: string) => {
                 const trimmed = line.trim();
                 return trimmed.length > 5 && trimmed.length < 100 && 
                        (trimmed === trimmed.toUpperCase() || /^\d+\.?\s/.test(trimmed));
             });
 
             // Look for table-like structures (lines with multiple tabs or consistent spacing)
-            const potentialTables = lines.filter(line => {
+            const potentialTables = lines.filter((line: string) => {
                 return (line.match(/\t/g) || []).length >= 3 || 
                        (line.match(/\s{3,}/g) || []).length >= 2;
             });
