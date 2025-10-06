@@ -155,7 +155,7 @@
     "@vscode/test-electron": "^2.3.8",
     "eslint": "^9.31.0",
     "glob": "^11.0.3",
-    "mocha": "^11.7.1",
+    "mocha": "^11.7.4",
     "typescript": "^5.9.2"
   },
   "dependencies": {
