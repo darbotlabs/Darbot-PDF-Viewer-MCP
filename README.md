@@ -282,6 +282,36 @@ This extension includes comprehensive MCP (Model Context Protocol) support for A
 
 All tools include comprehensive error handling and support for AI-powered document processing workflows.
 
+### 🔌 Swagger 2.0 API Connector
+
+The extension includes a **Swagger 2.0 (OpenAPI) specification** for seamless integration with **Microsoft Copilot Studio** and **Power Platform**:
+
+- **Location**: [`swagger/swagger.json`](swagger/swagger.json)
+- **Documentation**: [`swagger/README.md`](swagger/README.md)
+- **Compatibility**: Microsoft Copilot Studio, Power Apps, Power Automate, Azure Logic Apps
+
+#### Key Features
+- ✅ All 14 MCP tools exposed as REST API endpoints
+- ✅ Full Swagger 2.0 specification for custom connector import
+- ✅ Ready for Copilot Studio integration
+- ✅ Power Platform workflow automation support
+- ✅ Comprehensive request/response schemas
+
+#### Quick Integration
+```bash
+# For Copilot Studio:
+# 1. Import swagger/swagger.json as custom connector
+# 2. Configure base URL and authentication
+# 3. Use in conversation topics
+
+# For Power Platform:
+# 1. Create custom connector from swagger.json
+# 2. Test endpoints in Power Apps
+# 3. Build workflows in Power Automate
+```
+
+See the [Swagger connector documentation](swagger/README.md) for detailed integration guides.
+
 ## 🛠️ Development
 
 ### Setup

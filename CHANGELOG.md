@@ -12,6 +12,36 @@ All notable changes to the Darbot PDF Viewer MCP extension will be documented in
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- **Swagger 2.0 API Connector** - Full OpenAPI specification for Microsoft Copilot Studio and Power Platform integration
+  - 15 REST API endpoints exposing all MCP tools
+  - Complete request/response schemas and examples
+  - Ready for custom connector import in Copilot Studio
+  - Power Platform compatibility (Power Apps, Power Automate, Azure Logic Apps)
+  - Comprehensive integration documentation in `swagger/README.md`
+  - Detailed Copilot Studio integration guide in `COPILOT-STUDIO-INTEGRATION.md`
+
+### Changed
+- **Updated Dependencies** - All npm packages updated to latest compatible versions
+  - @types/mocha: 10.0.6 → 10.0.10
+  - @types/node: 24.5.2 → 24.6.2
+  - @types/vscode: 1.103.0 → 1.104.0
+  - @typescript-eslint/eslint-plugin: 8.37.0 → 8.45.0 (fixed TypeScript compatibility)
+  - @typescript-eslint/parser: 8.33.1 → 8.45.0
+  - @vscode/test-electron: 2.3.8 → 2.4.4
+  - eslint: 9.31.0 → 9.37.0
+  - mocha: 11.7.1 → 11.7.4
+  - typescript: 5.9.2 → 5.9.3
+- **Removed** deprecated @types/glob package (using built-in glob types)
+- **Disabled Dependabot** - Removed automated dependency updates configuration
+
+### Fixed
+- TypeScript type annotations in pdf-processor.ts filter callbacks
+- Security vulnerabilities: 0 vulnerabilities (was 1 low severity)
+- TypeScript/ESLint version compatibility issues
+
 ## [1.0.0] - 2024-12-19
 
 ### 🚀 **Marketplace Release** - Major Milestone!
