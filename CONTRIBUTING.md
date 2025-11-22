@@ -9,8 +9,11 @@ Thank you for your interest in contributing to the Darbot PDF Viewer MCP extensi
 - VSCode 1.85.0+
 - Git
 - TypeScript knowledge
+- Docker (optional but recommended)
 
 ### Development Setup
+
+#### Option 1: Local Development
 
 1. **Clone the repository**
    ```bash
@@ -18,25 +21,70 @@ Thank you for your interest in contributing to the Darbot PDF Viewer MCP extensi
    cd Darbot-PDF-Viewer-MCP
    ```
 
-2. **Install dependencies**
+2. **Install system dependencies**
+   
+   The extension requires native dependencies for `canvas` and `sharp` packages.
+   
+   **Ubuntu/Debian:**
+   ```bash
+   sudo apt-get install pkg-config libpixman-1-dev libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev libpng-dev
+   ```
+   
+   **macOS:**
+   ```bash
+   brew install pkg-config pixman cairo pango jpeg giflib librsvg libpng
+   ```
+   
+   **Windows:**
+   - Install [Windows Build Tools](https://github.com/felixrieseberg/windows-build-tools)
+   - Or use Docker setup (recommended)
+
+3. **Install dependencies**
    ```bash
    npm install
    ```
 
-3. **Compile the project**
+4. **Compile the project**
    ```bash
    npm run compile
    ```
 
-4. **Run tests**
+5. **Run tests**
    ```bash
    npm test
    ```
 
-5. **Run validation**
+6. **Run validation**
    ```bash
    npm run test:validation
    ```
+
+#### Option 2: Docker Development (Recommended)
+
+Docker provides a consistent build environment across all platforms without manual dependency installation.
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/darbotlabs/Darbot-PDF-Viewer-MCP.git
+   cd Darbot-PDF-Viewer-MCP
+   ```
+
+2. **Start development environment**
+   ```bash
+   docker-compose up dev
+   ```
+
+3. **Run tests in Docker**
+   ```bash
+   docker-compose run build npm test
+   ```
+
+4. **Create VSIX package**
+   ```bash
+   docker-compose run package
+   ```
+
+See [DOCKER.md](DOCKER.md) for complete Docker setup and usage instructions.
 
 ## 📋 Development Guidelines
 

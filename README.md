@@ -316,11 +316,32 @@ See the [Swagger connector documentation](swagger/README.md) for detailed integr
 
 ### Setup
 
+#### Option 1: Local Development (Requires System Dependencies)
+
 ```bash
 git clone https://github.com/darbotlabs/Darbot-PDF-Viewer-MCP.git
 cd Darbot-PDF-Viewer-MCP
 npm install
 ```
+
+**Note**: Local development requires native dependencies (`pkg-config`, `pixman-1`, `libcairo2`, etc.) for `canvas` and `sharp` packages. See [System Requirements](#system-requirements) below.
+
+#### Option 2: Docker Development (Recommended)
+
+Use Docker for a consistent build environment across all platforms:
+
+```bash
+# Development with live compilation
+docker-compose up dev
+
+# Build and test
+docker-compose run build
+
+# Create VSIX package
+docker-compose run package
+```
+
+See [DOCKER.md](DOCKER.md) for complete Docker setup and usage instructions.
 
 ### Build
 
@@ -359,6 +380,24 @@ The production validation covers:
 ```bash
 npm run vscode:prepublish
 ```
+
+### System Requirements
+
+For local development, you need these system dependencies:
+
+**Ubuntu/Debian**:
+```bash
+sudo apt-get install pkg-config libpixman-1-dev libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev libpng-dev
+```
+
+**macOS**:
+```bash
+brew install pkg-config pixman cairo pango jpeg giflib librsvg libpng
+```
+
+**Windows**:
+- Install [Windows Build Tools](https://github.com/felixrieseberg/windows-build-tools)
+- Or use the Docker setup (recommended)
 
 ## 📁 Project Structure
 
