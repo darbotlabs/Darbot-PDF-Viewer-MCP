@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Docker Build Environment** - Comprehensive containerized development and build environment
+  - Dockerfile with all native dependencies (pkg-config, pixman, cairo, pango, etc.)
+  - docker-compose.yml with three services: dev, build, and package
+  - Complete DOCKER.md documentation with usage examples, CI/CD integration, and troubleshooting
+  - .dockerignore file for optimized Docker builds
+  - Cross-platform consistency for canvas and sharp native module builds
 - **Swagger 2.0 API Connector** - Full OpenAPI specification for Microsoft Copilot Studio and Power Platform integration
   - 15 REST API endpoints exposing all MCP tools
   - Complete request/response schemas and examples
@@ -24,6 +30,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Detailed Copilot Studio integration guide in `COPILOT-STUDIO-INTEGRATION.md`
 
 ### Changed
+- **Replaced deprecated pdf2pic dependency** - Migrated from pdf2pic (which depends on deprecated gm/GraphicsMagick) to pdf-to-img
+  - pdf2pic → pdf-to-img v5.0.0 (pure JavaScript, no native GraphicsMagick dependency)
+  - Updated all PDF-to-image conversion functions (extractImages, convertToSvg, convertToJpeg, convertToPng, extractPageImage)
+  - No breaking API changes for users
+  - Improved reliability with pdfjs-dist backend
+- **Fixed pdf-parse import** - Resolved TypeScript compilation errors with ESM/CommonJS module compatibility
+- **Updated Documentation** - Enhanced development setup instructions
+  - README.md: Added Docker setup instructions and system requirements
+  - CONTRIBUTING.md: Added Docker development workflow option
+  - Both local and Docker development paths documented
 - **Updated Dependencies** - All npm packages updated to latest compatible versions
   - @types/mocha: 10.0.6 → 10.0.10
   - @types/node: 24.5.2 → 24.6.2
@@ -38,9 +54,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Disabled Dependabot** - Removed automated dependency updates configuration
 
 ### Fixed
+- **Eliminated deprecated gm (GraphicsMagick) module** - No longer a transitive dependency via pdf2pic
+- **TypeScript compilation errors** - Fixed 5 compilation errors related to pdf-parse module import
+- **Security vulnerabilities** - 0 vulnerabilities (maintained from previous release)
 - TypeScript type annotations in pdf-processor.ts filter callbacks
-- Security vulnerabilities: 0 vulnerabilities (was 1 low severity)
 - TypeScript/ESLint version compatibility issues
+
+### Security
+- ✅ Zero npm audit vulnerabilities
+- ✅ Removed deprecated gm module (sunset as of 2025-02-24)
+- ✅ All dependencies up-to-date with security patches
 
 ## [1.0.0] - 2024-12-19
 
