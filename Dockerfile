@@ -38,8 +38,16 @@ RUN npm install -g typescript eslint @vscode/vsce
 COPY . .
 
 # Install dependencies
-# Note: npm may show an "Exit handler never called" error but this doesn't affect installation
-RUN npm install || true
+# Note: npm may show an "Exit handler never called" error, but this is a known npm timing issue
+# that doesn't prevent successful installation. We verify installation with subsequent check.
+RUN npm install
+
+# Verify critical dependencies are installed
+RUN test -d node_modules && \
+    test -f node_modules/typescript/package.json && \
+    test -f node_modules/sharp/package.json && \
+    test -f node_modules/canvas/package.json && \
+    echo "All dependencies installed successfully"
 
 # Expose any ports if needed (for future dev server)
 EXPOSE 3000
