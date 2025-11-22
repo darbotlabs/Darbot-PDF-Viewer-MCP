@@ -223,7 +223,7 @@ export class ValidationFramework {
             }
 
             // Validate dependencies
-            const requiredDeps = ['pdf-parse', 'pdf2pic', 'sharp', 'canvas'];
+            const requiredDeps = ['pdf-parse', 'pdf-to-img', 'sharp', 'canvas'];
             for (const dep of requiredDeps) {
                 if (!packageJson.dependencies?.[dep]) {
                     this.addResult('Package.json', 'fail', `Missing dependency: ${dep}`);

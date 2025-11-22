@@ -1,9 +1,12 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import pdf from 'pdf-parse';
-import pdf2pic from 'pdf2pic';
-import * as sharp from 'sharp';
+import * as pdfParse from 'pdf-parse';
+import { pdf as pdfToImg } from 'pdf-to-img';
+import sharp from 'sharp';
+
+// Handle both ESM and CommonJS module formats
+const pdf = (pdfParse as any).default || pdfParse;
 
 /**
  * Utility class for PDF processing operations
@@ -53,30 +56,24 @@ export class PdfProcessor {
      */
     public static async extractImages(pdfUri: vscode.Uri, outputDir: string): Promise<string[]> {
         try {
-            const convert = pdf2pic.fromPath(pdfUri.fsPath, {
-                density: 200,
-                saveFilename: "page",
-                savePath: outputDir,
-                format: "png",
-                width: 2000,
-                height: 2000
-            });
-
+            await fs.promises.mkdir(outputDir, { recursive: true });
+            
             // Extract first 10 pages (to avoid excessive resource usage)
             const maxPages = 10;
             const imagePaths: string[] = [];
             
-            for (let i = 1; i <= maxPages; i++) {
-                try {
-                    const result = await convert(i, { responseType: "image" });
-                    if (result.path) {
-                        imagePaths.push(result.path);
-                    }
-                } catch (pageError) {
-                    // Some pages might fail, continue with others
-                    console.warn(`Failed to extract page ${i}:`, pageError);
-                    break; // If a page fails, likely we've reached the end
+            const document = await pdfToImg(pdfUri.fsPath, { scale: 2 });
+            
+            let pageNumber = 0;
+            for await (const image of document) {
+                pageNumber++;
+                if (pageNumber > maxPages) {
+                    break;
                 }
+                
+                const imagePath = path.join(outputDir, `page-${pageNumber}.png`);
+                await fs.promises.writeFile(imagePath, image);
+                imagePaths.push(imagePath);
             }
 
             return imagePaths;
@@ -92,39 +89,35 @@ export class PdfProcessor {
     public static async convertToSvg(pdfUri: vscode.Uri, outputPath: string): Promise<string> {
         try {
             // For SVG conversion, we'll first convert to high-quality PNG then create SVG wrapper
-            const tempDir = path.join(path.dirname(outputPath), 'temp');
-            await fs.promises.mkdir(tempDir, { recursive: true });
+            const document = await pdfToImg(pdfUri.fsPath, { scale: 3 });
             
-            const convert = pdf2pic.fromPath(pdfUri.fsPath, {
-                density: 300,
-                saveFilename: "svg_temp",
-                savePath: tempDir,
-                format: "png",
-                width: 1200,
-                height: 1600
-            });
-
-            const result = await convert(1, { responseType: "image" });
-            if (!result.path) {
+            // Get first page
+            let imageBuffer: Buffer | null = null;
+            for await (const image of document) {
+                imageBuffer = image;
+                break; // Only get first page
+            }
+            
+            if (!imageBuffer) {
                 throw new Error('Failed to create temporary image for SVG conversion');
             }
 
+            // Get image dimensions using sharp
+            const metadata = await sharp(imageBuffer).metadata();
+            const width = metadata.width || 1200;
+            const height = metadata.height || 1600;
+            
             // Create SVG wrapper around the image
-            const imageBuffer = await fs.promises.readFile(result.path);
             const base64Image = imageBuffer.toString('base64');
             
             const svgContent = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-     width="1200" height="1600" viewBox="0 0 1200 1600">
+     width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
   <image xlink:href="data:image/png;base64,${base64Image}" 
-         width="1200" height="1600" x="0" y="0"/>
+         width="${width}" height="${height}" x="0" y="0"/>
 </svg>`;
 
             await fs.promises.writeFile(outputPath, svgContent);
-            
-            // Clean up temp file
-            await fs.promises.unlink(result.path);
-            await fs.promises.rmdir(tempDir);
             
             return outputPath;
         } catch (error) {
@@ -138,21 +131,25 @@ export class PdfProcessor {
      */
     public static async convertToJpeg(pdfUri: vscode.Uri, outputPath: string): Promise<string> {
         try {
-            const convert = pdf2pic.fromPath(pdfUri.fsPath, {
-                density: 200,
-                saveFilename: path.basename(outputPath, '.jpg'),
-                savePath: path.dirname(outputPath),
-                format: "jpg",
-                width: 1600,
-                height: 2000
-            });
-
-            const result = await convert(1, { responseType: "image" });
-            if (!result.path) {
+            const document = await pdfToImg(pdfUri.fsPath, { scale: 2 });
+            
+            // Get first page
+            let imageBuffer: Buffer | null = null;
+            for await (const image of document) {
+                imageBuffer = image;
+                break; // Only get first page
+            }
+            
+            if (!imageBuffer) {
                 throw new Error('Failed to convert PDF to JPEG');
             }
 
-            return result.path;
+            // Convert PNG to JPEG using sharp
+            await sharp(imageBuffer)
+                .jpeg({ quality: 90 })
+                .toFile(outputPath);
+
+            return outputPath;
         } catch (error) {
             console.error('Failed to convert PDF to JPEG:', error);
             throw new Error(`JPEG conversion failed: ${error}`);
@@ -164,21 +161,23 @@ export class PdfProcessor {
      */
     public static async convertToPng(pdfUri: vscode.Uri, outputPath: string): Promise<string> {
         try {
-            const convert = pdf2pic.fromPath(pdfUri.fsPath, {
-                density: 200,
-                saveFilename: path.basename(outputPath, '.png'),
-                savePath: path.dirname(outputPath),
-                format: "png",
-                width: 1600,
-                height: 2000
-            });
-
-            const result = await convert(1, { responseType: "image" });
-            if (!result.path) {
+            const document = await pdfToImg(pdfUri.fsPath, { scale: 2 });
+            
+            // Get first page
+            let imageBuffer: Buffer | null = null;
+            for await (const image of document) {
+                imageBuffer = image;
+                break; // Only get first page
+            }
+            
+            if (!imageBuffer) {
                 throw new Error('Failed to convert PDF to PNG');
             }
 
-            return result.path;
+            // Write PNG directly
+            await fs.promises.writeFile(outputPath, imageBuffer);
+
+            return outputPath;
         } catch (error) {
             console.error('Failed to convert PDF to PNG:', error);
             throw new Error(`PNG conversion failed: ${error}`);
@@ -325,25 +324,31 @@ Content Sample: ${textSample}`;
             }
 
             const outputDir = outputPath ? path.dirname(outputPath) : path.join(path.dirname(pdfUri.fsPath), 'extracted-pages');
-            const filename = outputPath ? path.basename(outputPath, path.extname(outputPath)) : `page-${pageNumber}`;
+            const filename = outputPath ? path.basename(outputPath) : `page-${pageNumber}.png`;
             
             await fs.promises.mkdir(outputDir, { recursive: true });
 
-            const convert = pdf2pic.fromPath(pdfUri.fsPath, {
-                density: 200,
-                saveFilename: filename,
-                savePath: outputDir,
-                format: "png",
-                width: 1600,
-                height: 2000
-            });
-
-            const result = await convert(pageNumber, { responseType: "image" });
-            if (!result.path) {
+            const document = await pdfToImg(pdfUri.fsPath, { scale: 2 });
+            
+            // Extract specific page
+            let currentPage = 0;
+            let imageBuffer: Buffer | null = null;
+            for await (const image of document) {
+                currentPage++;
+                if (currentPage === pageNumber) {
+                    imageBuffer = image;
+                    break;
+                }
+            }
+            
+            if (!imageBuffer) {
                 throw new Error(`Failed to extract page ${pageNumber} as image`);
             }
 
-            return result.path;
+            const finalPath = path.join(outputDir, filename);
+            await fs.promises.writeFile(finalPath, imageBuffer);
+
+            return finalPath;
         } catch (error) {
             console.error('Failed to extract page image:', error);
             throw new Error(`Page image extraction failed: ${error}`);
