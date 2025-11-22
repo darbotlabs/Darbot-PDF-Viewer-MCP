@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Development build environment
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: darbot-pdf-viewer-mcp:dev
+    container_name: darbot-pdf-viewer-dev
+    volumes:
+      # Mount source code for live development
+      - ./src:/workspace/src
+      - ./package.json:/workspace/package.json
+      - ./package-lock.json:/workspace/package-lock.json
+      - ./tsconfig.json:/workspace/tsconfig.json
+      - ./eslint.config.js:/workspace/eslint.config.js
+      # Preserve node_modules in container
+      - node_modules:/workspace/node_modules
+      # Preserve build output
+      - ./out:/workspace/out
+    working_dir: /workspace
+    command: npm run watch
+    environment:
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
+
+  # Build environment for CI/CD
+  build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: darbot-pdf-viewer-mcp:build
+    container_name: darbot-pdf-viewer-build
+    volumes:
+      - ./out:/workspace/out
+      - ./dist:/workspace/dist
+    working_dir: /workspace
+    command: sh -c "npm run compile && npm run lint && npm run test:validation"
+    environment:
+      - NODE_ENV=production
+
+  # Package builder for creating VSIX
+  package:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: darbot-pdf-viewer-mcp:package
+    container_name: darbot-pdf-viewer-package
+    volumes:
+      - ./:/workspace/output
+    working_dir: /workspace
+    command: sh -c "npm install -g @vscode/vsce && npm run compile && vsce package && cp *.vsix /workspace/output/"
+    environment:
+      - NODE_ENV=production
+
+volumes:
+  node_modules:
